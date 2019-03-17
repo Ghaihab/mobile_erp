@@ -56,7 +56,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String CREATE_TABLE_EMPLOYEE = "CREATE TABLE " + TABLE1_NAME + "("
-                + COLUMN_E_ID + " TEXT PRIMARY KEY, "
+                + COLUMN_E_ID + "INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
                 + COLUMN_SSN + " TEXT, "
                 + COLUMN_SEX + " TEXT, "
                 + COLUMN_RATE + " TEXT, "
@@ -135,7 +135,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
 
-        values.put(COLUMN_E_ID, emp.getEmployee_id());
         values.put(COLUMN_SSN, emp.getSsn());
         values.put(COLUMN_SEX, emp.getSex());
         values.put(COLUMN_RATE, emp.getRate());

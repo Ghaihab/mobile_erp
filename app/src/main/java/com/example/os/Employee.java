@@ -37,7 +37,6 @@ public class Employee implements Parcelable {
 
 	public Employee() {
 
-		this.employee_id = " ";
 		this.ssn = " ";
 		this.first_name = " ";
 		this.last_name = " ";
@@ -57,7 +56,6 @@ public class Employee implements Parcelable {
 
 	private Employee(Parcel in){
 
-		this.employee_id = in.readString();
 		this.ssn = in.readString();
 		this.first_name = in.readString();
 		this.last_name = in.readString();

@@ -14,14 +14,15 @@ public class MyDBHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     ////////////////////////////////////// Employee Table /////////////////////////////////////////
-    private static final String TABLE1_NAME = "Employee";
-    private static final String COLUMN_E_ID = "eid";
+    private static final String EMPOLYEE = "employees";
+    private static final String COLUMN_E_ID = "id";
     private static final String COLUMN_SSN = "ssn";
     private static final String COLUMN_SEX = "sex";
     private static final String COLUMN_RATE = "rate";
     private static final String COLUMN_PHONE_NUMBER = "phone_number";
     private static final String COLUMN_FIRST_NAME = "first_name";
     private static final String COLUMN_LAST_NAME = "last_name";
+    private static final String COLUMN_DEPARTMENT_ID = "department_id";
     private static final String COLUMN_ATTENDANCE = "attendance";
     private static final String COLUMN_DATE_OF_BIRTH = "date_of_birth";
     private static final String COLUMN_CITY = "city";
@@ -31,19 +32,48 @@ public class MyDBHandler extends SQLiteOpenHelper {
     private static final String COLUMN_E_PASSWORD = "pass_word";
 
     ////////////////////////////////////// DEPARTMENT Table /////////////////////////////////////////
-    private static final String TABLE2_NAME = "Department";
-    private static final String COLUMN_D_ID = "did";
+    private static final String DEPARTMENT = "departments";
+    private static final String COLUMN_D_ID = "id";
     private static final String COLUMN_D_NAME = "d_name";
     private static final String COLUMN_MGR_ID = "mgr_id";
 
-    ////////////////////////////////////// CERTIFICATE Table /////////////////////////////////////////
-    private static final String TABLE3_NAME = "Certificate";
-    private static final String COLUMN_C_ID = "cid";
-    private static final String COLUMN_E_ID_FK = "eid";
-    private static final String COLUMN_FILE_NAME = "file_name";
-    private static final String COLUMN_FILE_TYPE = "file_type";
 
-    //////////////////////////////////////////////
+    //////////////////////////////////////// VACATION Table ////////////////////////////////////////
+    private static final String VACATION = "vacations";
+    private static final String COLUMN_V_ID = "id";
+    private static final String COLUMN_V_NAME = "name";
+    private static final String COLUMN_V_TYPE = "type";
+
+    //////////////////////////////////////// EMPLOYEES_VACATIONS Table ////////////////////////////////////////
+    private static final String EMPLOYEES_VACATIONS = "employee_vacations";
+    private static final String COLUMN_E_V_ID= "id";
+    private static final String COLUMN_E_V_E_ID = "e_id";
+    private static final String COLUMN_E_V_V_ID = "v_id";
+
+
+    //////////////////////////////////////// CUSTODIES Table ////////////////////////////////////////
+    private static final String CUSTODIES = "custodies";
+    private static final String COLUMN_C_ID = "id";
+    private static final String COLUMN_C_NAME = "name";
+    private static final String COLUMN_C_E_ID= "e_id";
+    private static final String COLUMN_C_RATE= "rate";
+
+    //////////////////////////////////////// EMPLOYEES_CUSTODIES Table ////////////////////////////////////////
+    private static final String EMPLOYEES_CUSTODIES = "employees_custodies";
+    private static final String COLUMN_E_C_ID = "id";
+    private static final String COLUMN_E_C_E_ID = "e_id";
+    private static final String COLUMN_E_C_C_ID = "c_id";
+
+
+    ////////////////////////////////////// employee_uploads Table /////////////////////////////////////////
+    private static final String EMPLOYEE_UPLOADS = "employee_uploads";
+    private static final String COLUMN_E_U_ID = "id";
+    private static final String COLUMN_E_U_E_ID = "employee_id";
+    private static final String COLUMN_E_U_FILE_NAME = "file_name";
+    private static final String COLUMN_E_U_FILE_TYPE = "file_type";
+
+
+
 
     //initialize the database
     public MyDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -55,47 +85,85 @@ public class MyDBHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String CREATE_TABLE_EMPLOYEE = "CREATE TABLE " + TABLE1_NAME + "("
-                + COLUMN_E_ID + "INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+        db.execSQL(createTableEmployee());
+        db.execSQL(createTableDepartement());
+//        db.execSQL(createTableVacation());
+//        db.execSQL(createTableEmployeeVacations());
+//        db.execSQL(createTableCustodies());
+//        db.execSQL(createTableEmployeesCustodies());
+//        db.execSQL(createTableEmployeeUploads());
+    }
+
+    private String createTableEmployee(){
+        return "CREATE TABLE " + EMPOLYEE + "("
+                + COLUMN_E_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_SSN + " TEXT, "
                 + COLUMN_SEX + " TEXT, "
                 + COLUMN_RATE + " TEXT, "
                 + COLUMN_PHONE_NUMBER + " TEXT, "
                 + COLUMN_FIRST_NAME + " TEXT, "
                 + COLUMN_LAST_NAME + " TEXT, "
-                + COLUMN_ATTENDANCE + " TEXT, "
+                + COLUMN_DEPARTMENT_ID + " INTEGER, "
                 + COLUMN_DATE_OF_BIRTH + " TEXT, "
                 + COLUMN_CITY + " TEXT, "
                 + COLUMN_STREET + " TEXT, "
                 + COLUMN_ZIP_CODE + " TEXT, "
                 + COLUMN_E_USERNAME + " TEXT, "
-                + COLUMN_E_PASSWORD + " TEXT "
+                + COLUMN_E_PASSWORD + " TEXT, "
                 + ")";
-        /*
-        String CREATE_TABLE_DEPARTMENT = "CREATE TABLE " + TABLE2_NAME + "("
-                + COLUMN_D_ID + " TEXT PRIMARY KEY, "
-                + COLUMN_D_NAME + " TEXT, "
-                + COLUMN_MGR_ID + " TEXT, "
-                +
-                "FOREIGN KEY(COLUMN_MGR_ID) REFERENCES TABLE1_NAME(COLUMN_E_ID) "
-                + ")";
-
-        String CREATE_TABLE_CERTIFICATE = "CREATE TABLE " + TABLE3_NAME + "("
-                + COLUMN_C_ID + " TEXT PRIMARY KEY,"
-                + COLUMN_E_ID_FK + " TEXT,"
-                + COLUMN_FILE_NAME + " TEXT,"
-                + COLUMN_FILE_TYPE + " TEXT,"
-                +
-                "FOREIGN KEY(COLUMN_E_ID_FK) REFERENCES TABLE1_NAME(COLUMN_E_ID)"
-                + ")";
-        */
-
-        db.execSQL(CREATE_TABLE_EMPLOYEE);
-
-        //db.execSQL(CREATE_TABLE_DEPARTMENT);
-        //db.execSQL(CREATE_TABLE_CERTIFICATE);
-
     }
+
+    private String createTableDepartement(){
+        return "CREATE TABLE " + DEPARTMENT + "("
+                + COLUMN_D_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COLUMN_D_NAME + " TEXT, "
+                + COLUMN_MGR_ID + " INTEGER, "
+                + ")";
+    }
+
+    private String createTableVacation(){
+        return "CREATE TABLE " + VACATION + "("
+                + COLUMN_V_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + COLUMN_V_NAME + " TEXT, "
+                + COLUMN_V_TYPE + " TEXT, "
+                + ")";
+    }
+
+    private String createTableEmployeeVacations(){
+        return "CREATE TABLE " + EMPLOYEES_VACATIONS + "("
+                + COLUMN_E_V_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + COLUMN_E_V_E_ID + " INTEGER, "
+                + COLUMN_E_V_V_ID + " INTEGER, "
+                + ")";
+    }
+
+    private String createTableCustodies(){
+        return "CREATE TABLE " + CUSTODIES + "("
+                + COLUMN_C_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + COLUMN_C_E_ID + " INTEGER ,"
+                + COLUMN_C_NAME + " TEXT ,"
+                + COLUMN_C_RATE + " TEXT ,"
+                + ")";
+    }
+
+    private String createTableEmployeesCustodies() {
+        return "CREATE TABLE " + EMPLOYEES_CUSTODIES + "("
+                + COLUMN_E_C_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COLUMN_E_C_E_ID + " INTEGER, "
+                + COLUMN_E_C_C_ID + " INTEGER, "
+                + ")";
+    }
+
+    private String createTableEmployeeUploads(){
+        return "CREATE TABLE " + EMPLOYEE_UPLOADS + "("
+                + COLUMN_E_U_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COLUMN_E_U_E_ID + " INTEGER, "
+                + COLUMN_E_U_FILE_NAME + " TEXT, "
+                + COLUMN_E_U_FILE_TYPE + " TEXT, "
+                + ")";
+    }
+
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
@@ -106,7 +174,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
         String result = "";
 
-        String query = "Select * FROM " + TABLE1_NAME;
+        String query = "Select * FROM " + EMPOLYEE;
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -151,7 +219,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
-        db.insert(TABLE1_NAME, null, values);
+        db.insert(EMPOLYEE, null, values);
 
         db.close();
 
@@ -159,7 +227,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     public Employee getUser(String username, String password) {
 
-        String query = "Select * FROM " + TABLE1_NAME + " WHERE " + COLUMN_E_USERNAME + " = '" + username + "' " + " AND " + COLUMN_E_PASSWORD + " = '" + password + "'" ;
+        String query = "Select * FROM " + EMPOLYEE + " WHERE " + COLUMN_E_USERNAME + " = '" + username + "' " + " AND " + COLUMN_E_PASSWORD + " = '" + password + "'" ;
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -202,7 +270,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
     public ArrayList<Employee> findHandlerEmployeeByID(String eid) {
 
-        String query = "Select * FROM " + TABLE1_NAME + "WHERE" + COLUMN_E_ID + " = " + "'" + eid + "'";
+        String query = "Select * FROM " + EMPOLYEE + "WHERE" + COLUMN_E_ID + " = " + "'" + eid + "'";
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -255,7 +323,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
-        return db.delete(TABLE1_NAME, null, null) > 0;
+        return db.delete(EMPOLYEE, null, null) > 0;
 
     }
 
@@ -263,7 +331,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
         boolean result = false;
 
-        String query = "Select * FROM " + TABLE1_NAME + " WHERE " + COLUMN_E_ID + " = '" + eid + "'";
+        String query = "Select * FROM " + EMPOLYEE + " WHERE " + COLUMN_E_ID + " = '" + eid + "'";
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -288,7 +356,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
             emp.setUsername(cursor.getString(13));
             emp.setPassword(cursor.getString(14));
 
-            db.delete(TABLE1_NAME, COLUMN_E_ID + " =? ",
+            db.delete(EMPOLYEE, COLUMN_E_ID + " =? ",
                     new String[]{
                             emp.getEmployee_id()
                     });
@@ -326,7 +394,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_E_USERNAME, un);
         values.put(COLUMN_E_PASSWORD, ps);
 
-        return db.update(TABLE1_NAME, values, COLUMN_E_ID + " = " + eid, null) > 0;
+        return db.update(EMPOLYEE, values, COLUMN_E_ID + " = " + eid, null) > 0;
 
     }
 

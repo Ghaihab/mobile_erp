@@ -23,7 +23,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
     private static final String COLUMN_FIRST_NAME = "first_name";
     private static final String COLUMN_LAST_NAME = "last_name";
     private static final String COLUMN_DEPARTMENT_ID = "department_id";
-    private static final String COLUMN_ATTENDANCE = "attendance";
     private static final String COLUMN_DATE_OF_BIRTH = "date_of_birth";
     private static final String COLUMN_CITY = "city";
     private static final String COLUMN_STREET = "street";
@@ -80,13 +79,14 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
 
+
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL(createTableEmployee());
-        db.execSQL(createTableDepartement());
+//        db.execSQL(createTableEmployee());
+//        db.execSQL(createTableDepartement());
 //        db.execSQL(createTableVacation());
 //        db.execSQL(createTableEmployeeVacations());
 //        db.execSQL(createTableCustodies());
@@ -209,7 +209,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_PHONE_NUMBER, emp.getPhone_number());
         values.put(COLUMN_FIRST_NAME, emp.getFirst_name());
         values.put(COLUMN_LAST_NAME, emp.getLast_name());
-        values.put(COLUMN_ATTENDANCE, emp.getAttendance());
         values.put(COLUMN_DATE_OF_BIRTH, emp.getDate_of_birth());
         values.put(COLUMN_CITY, emp.getCity());
         values.put(COLUMN_STREET, emp.getStreet());
@@ -386,7 +385,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_PHONE_NUMBER, pn);
         values.put(COLUMN_FIRST_NAME, fn);
         values.put(COLUMN_LAST_NAME, ln);
-        values.put(COLUMN_ATTENDANCE, attendance);
         values.put(COLUMN_DATE_OF_BIRTH, dob);
         values.put(COLUMN_CITY, city);
         values.put(COLUMN_STREET, street);

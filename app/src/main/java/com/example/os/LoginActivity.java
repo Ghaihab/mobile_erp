@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
 
         MyDBHandler dbh = new MyDBHandler(this, null, null, 1);
         dbh.addToken(newToken);
-        Toast.makeText(this, "All Employees were added successfully!!!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Logged in successfully", Toast.LENGTH_SHORT).show();
         dbh.close();
 
     }
@@ -36,7 +36,6 @@ public class LoginActivity extends AppCompatActivity {
 
         MyDBHandler dbh = new MyDBHandler(this, null, null, 1);
         dbh.deleteTokens();
-        Toast.makeText(this, "Token deleted !!!", Toast.LENGTH_SHORT).show();
         dbh.close();
 
     }

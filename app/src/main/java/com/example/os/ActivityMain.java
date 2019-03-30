@@ -24,4 +24,11 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
+    public void buttonMainCustody(View view) {
+
+        Intent myIntent = new Intent(this, custodyActivity.class);
+        startActivity(myIntent);
+
+    }
+
 }

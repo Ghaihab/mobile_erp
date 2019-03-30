@@ -49,5 +49,32 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return db.delete("Tokens", null, null) > 0;
     }
 
+    public String getLastToken(){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] projection = {
+                "id",
+                "access_token"
+        };
+
+
+        Cursor cursor = db.query(
+                "Tokens",   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                null,              // The columns for the WHERE clause
+                null,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                null// The sort order
+        );
+
+        cursor.moveToNext();
+
+        String access_token = cursor.getString(cursor.getColumnIndex("access_token"));
+
+        return access_token;
+    }
+
 }
 

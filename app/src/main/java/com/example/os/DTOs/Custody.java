@@ -22,6 +22,7 @@ public class Custody {
     public String getRate() {
         return rate;
     }
+
     public int getId(){
         return Id;
     }

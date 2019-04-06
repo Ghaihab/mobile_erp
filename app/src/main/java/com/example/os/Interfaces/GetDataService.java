@@ -1,8 +1,8 @@
 package com.example.os.Interfaces;
 
 import com.example.os.DTOs.Custody;
+import com.example.os.DTOs.CustodyRequest;
 import com.example.os.DTOs.Login;
-import com.example.os.DTOs.RetroPhoto;
 
 import java.util.List;
 
@@ -26,5 +26,13 @@ public interface GetDataService {
     @POST("custody/requests/create")
     @FormUrlEncoded
     Call <ResponseBody> createCustodyRequest(@Field("custody_id") int custody_id, @Header("Authorization") String authHeader);
+
+    @GET("custody/requests")
+    Call <List<CustodyRequest>> getCustodyRequests();
+
+    @GET("custodies")
+    Call <List<Custody>> getCustodies(@Header("Authorization") String authHeader);
+
+
 
 }

@@ -8,93 +8,117 @@
         android:background="#ffffff"
         tools:context=".req_new_custody_Activity">
 
-        <TableLayout
-            android:id="@+id/table"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginVertical="30dp"
-            android:background="#f1f1f1">
+    <TextView
+        android:id="@+id/textMyCustody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="8dp"
+        android:text="My Custody"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <TableRow>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Name"
-                    android:textStyle="bold" />
-
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="1dp"
-                    android:layout_marginBottom="1dp"
-                    android:layout_weight="1"
-                    android:background="#ffffff"
-                    android:gravity="center"
-                    android:text="Alice" />
-
-                <RadioButton
-                    android:id="@+id/radioButton5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="1dp"
-                    android:layout_marginBottom="1dp"
-                    android:layout_weight="1"
-                    android:background="#ffffff"
-                    android:gravity="center"
-                    android:text="Bob" />
-
-                <RadioButton
-                    android:id="@+id/radioButton6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="1dp"
-                    android:layout_marginBottom="1dp"
-                    android:layout_weight="1"
-                    android:background="#ffffff"
-                    android:gravity="center"
-                    android:text="Carey" />
-
-                <RadioButton
-                    android:id="@+id/radioButton7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-
-            </TableRow>
-
-        </TableLayout>
-
-    <Button
-        android:id="@+id/button4"
+    <TableLayout
+        android:id="@+id/accepted_custodies"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="30dp"
+        android:background="#f1f1f1">
+
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Name"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_weight="1"
+                android:background="#ffffff"
+                android:gravity="center"
+                android:text="Example" />
+
+        </TableRow>
+
+
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/textCustodyRequests"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="8dp"
+        android:text="Custody Requests"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TableLayout
+        android:id="@+id/custody_requests"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="30dp"
+        android:background="#f1f1f1">
+
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Name"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Status"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_weight="1"
+                android:background="#ffffff"
+                android:gravity="center"
+                android:text="house" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_weight="1"
+                android:background="#ffffff"
+                android:gravity="center"
+                android:text="Rejected" />
+
+        </TableRow>
+
+    </TableLayout>
 
 </LinearLayout>

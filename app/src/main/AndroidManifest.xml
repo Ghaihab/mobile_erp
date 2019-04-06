@@ -18,6 +18,9 @@
         <activity android:name=".custodyActivity"/>
         <activity android:name=".RequestNewCustodyActivity"/>
         <activity android:name=".MyCustodyActivity"/>
+        <activity android:name=".RequestNewVacationActivity"/>
+        <activity android:name=".VacationActivity"/>
+        <activity android:name=".MyVacationActivity"/>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

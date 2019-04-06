@@ -12,7 +12,7 @@ public class PersonalnfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.personal_information);
 
-        setPI();
+       // setPI();
 
     }
 

@@ -18,8 +18,8 @@ public class ActivityMain extends AppCompatActivity {
     public void buttonPersonalnformation(View view) {
 
         Intent myIntent = new Intent(this, PersonalnfoActivity.class);
-        Employee emp = (Employee)getIntent().getParcelableExtra("emp");
-        myIntent.putExtra("employee", emp);
+       // Employee emp = (Employee)getIntent().getParcelableExtra("emp");
+      //  myIntent.putExtra("employee", emp);
         startActivity(myIntent);
 
     }

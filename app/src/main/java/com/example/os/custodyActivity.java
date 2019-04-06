@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 public class custodyActivity extends AppCompatActivity {
 
@@ -16,12 +15,14 @@ public class custodyActivity extends AppCompatActivity {
     }
 
     public void req_Custody_Button(View view) {
+        Intent myIntent = new Intent(this, RequestNewCustodyActivity.class);
+        startActivity(myIntent);
     }
 
 
     public void My_Custody_Button(View view) {
 
-        Intent myIntent = new Intent(this, myCustodyActivity.class);
+        Intent myIntent = new Intent(this, MyCustodyActivity.class);
         startActivity(myIntent);
 
     }

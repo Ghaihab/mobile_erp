@@ -20,7 +20,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class myCustodyActivity extends AppCompatActivity{
+public class RequestNewCustodyActivity extends AppCompatActivity{
 
     RadioGroup radioGroup;
     RadioButton radioButton;
@@ -30,7 +30,7 @@ public class myCustodyActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_custody);
+        setContentView(R.layout.req_new_custody);
 
 
         radioGroup = findViewById(R.id.radioGroup);

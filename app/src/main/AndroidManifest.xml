@@ -16,7 +16,8 @@
         <activity android:name=".PersonalnfoActivity"></activity>
         <activity android:name=".ActivityMain" />
         <activity android:name=".custodyActivity"/>
-        <activity android:name=".myCustodyActivity"/>
+        <activity android:name=".RequestNewCustodyActivity"/>
+        <activity android:name=".MyCustodyActivity"/>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -58,17 +58,14 @@ public class LoginActivity extends AppCompatActivity {
                     addHandlers(newToken);
                     redirectToMainPage();
 
-                } catch (Exception exception){
-                    System.out.println("Error");
+                } catch (Exception exception){ System.out.println("Error");
                 }
 
 
             }
 
             @Override
-            public void onFailure(Call<Login> call, Throwable t) {
-                System.out.println("Error!!");
-            }
+            public void onFailure(Call<Login> call, Throwable t) { System.out.println("Error!!"); }
         });
 
 

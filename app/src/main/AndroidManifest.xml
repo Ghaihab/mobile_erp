@@ -21,6 +21,7 @@
         <activity android:name=".RequestNewVacationActivity"/>
         <activity android:name=".VacationActivity"/>
         <activity android:name=".MyVacationActivity"/>
+        <activity android:name=".HR_Main_Activity"/>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

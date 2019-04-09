@@ -11,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.os.Clients.RetrofitClientInstance;
+import com.example.os.DTOs.Custody;
+import com.example.os.DTOs.Vacation;
 import com.example.os.Interfaces.GetDataService;
 
 import java.util.List;
@@ -31,14 +33,13 @@ public class RequestNewVacationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.vacation);
-
+        setContentView(R.layout.req_new_vacation);
 
         radioGroup = findViewById(R.id.radioGroup);
         textView = findViewById(R.id.text_view_selected);
         Button apply = findViewById(R.id.button_apply);
         renderCustodyButtons();
-        apply.setOnClickListener(new View.OnClickListener(){
+        apply.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -52,17 +53,16 @@ public class RequestNewVacationActivity extends AppCompatActivity {
 
     public void checkButton(View view) {
 
-
         int radioId = radioGroup.getCheckedRadioButtonId();
         radioButton = findViewById(radioId);
         createVacationRequest(radioId);
-        Toast.makeText(this, "Requested for: " + radioButton.getText() +" successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Requested for: " + radioButton.getText() + " successfully", Toast.LENGTH_SHORT).show();
 
 
     }
 
 
-    private void createRadioButton(String text, int id){
+    private void createRadioButton(String text, int id) {
 
         RadioButton radioButton = new RadioButton(this);
         radioButton.setText(text);
@@ -72,27 +72,29 @@ public class RequestNewVacationActivity extends AppCompatActivity {
     }
 
 
-
-
-    private void renderCustodyButtons(){
+    private void renderCustodyButtons() {
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<List<com.example.os.DTOs.Custody>> call = service.getCustodyLookup();
-        call.enqueue(new Callback<List<com.example.os.DTOs.Custody>>() {
+        Call<List<Vacation>> call = service.getVacationLookup();
+        call.enqueue(new Callback<List<Vacation>>() {
             @Override
-            public void onResponse(Call<List<com.example.os.DTOs.Custody>> call, Response<List<com.example.os.DTOs.Custody>> response) {
-                for (com.example.os.DTOs.Custody custody : response.body()) {
-                    createRadioButton(custody.getName(), custody.getId());
+            public void onResponse(Call<List<Vacation>> call, Response<List<Vacation>> response) {
+                for (Vacation vacation : response.body()) {
+                    createRadioButton(vacation.getName(), vacation.getId());
                 }
             }
-}
 
+            @Override
+            public void onFailure(Call<List<Vacation>> call, Throwable t) {
+
+            }
+        });
     }
 
-    private void createVacationRequest(int id){
+    private void createVacationRequest(int id) {
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Call <ResponseBody> call = service.createCustodyRequest(id, getAuth());
+        Call<ResponseBody> call = service.createVacationRequest(id, getAuth());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -107,15 +109,15 @@ public class RequestNewVacationActivity extends AppCompatActivity {
     }
 
 
-    public void redirectToMyVacationPage(){
+    public void redirectToMyVacationPage() {
 
-        Intent myIntent = new Intent(this, custodyActivity.class);
+        Intent myIntent = new Intent(this, VacationActivity.class);
         startActivity(myIntent);
     }
 
-    private String getAuth(){
+    private String getAuth() {
 
         MyDBHandler db = new MyDBHandler(this, null, null, 1);
         return "Bearer " + db.getLastToken();
-            }
-        }
+    }
+}

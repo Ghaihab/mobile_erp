@@ -6,10 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#ffffff"
-    tools:context=".MyCustodyActivity">
+    tools:context=".MyVacationActivity">
 
     <TextView
-        android:id="@+id/textMyCustody"
+        android:id="@+id/textMyVacation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TableLayout
-        android:id="@+id/accepted_custodies"
+        android:id="@+id/accepted_vacations"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
@@ -43,7 +43,7 @@
     </TableLayout>
 
     <TextView
-        android:id="@+id/textCustodyRequests"
+        android:id="@+id/textVacationRequests"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -79,29 +79,6 @@
                 android:gravity="center"
                 android:text="Status"
                 android:textStyle="bold" />
-
-        </TableRow>
-
-        <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="1dp"
-                android:layout_marginBottom="1dp"
-                android:layout_weight="1"
-                android:background="#ffffff"
-                android:gravity="center"
-                android:text="house" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="1dp"
-                android:layout_marginBottom="1dp"
-                android:layout_weight="1"
-                android:background="#ffffff"
-                android:gravity="center"
-                android:text="Rejected" />
 
         </TableRow>
 

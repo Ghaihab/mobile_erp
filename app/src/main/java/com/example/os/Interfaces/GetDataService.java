@@ -3,6 +3,8 @@ package com.example.os.Interfaces;
 import com.example.os.DTOs.Custody;
 import com.example.os.DTOs.CustodyRequest;
 import com.example.os.DTOs.Login;
+import com.example.os.DTOs.Vacation;
+import com.example.os.DTOs.VacationRequest;
 
 import java.util.List;
 
@@ -32,6 +34,19 @@ public interface GetDataService {
 
     @GET("custodies")
     Call <List<Custody>> getCustodies(@Header("Authorization") String authHeader);
+
+    @GET("lookup/vacations")
+    Call<List<Vacation>> getVacationLookup();
+
+    @POST("vacation/requests/create")
+    @FormUrlEncoded
+    Call <ResponseBody> createVacationRequest(@Field("vacation_id") int vacation_id, @Header("Authorization") String authHeader);
+
+    @GET("vacation/requests")
+    Call <List<VacationRequest>> getVacationRequests();
+
+    @GET("vacations")
+    Call <List<Vacation>> getVacations(@Header("Authorization") String authHeader);
 
 
 

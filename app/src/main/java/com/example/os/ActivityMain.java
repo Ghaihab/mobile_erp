@@ -31,4 +31,8 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
+    public void buttonVacation(View view){
+        startActivity(new Intent(this, VacationActivity.class));
+    }
+
 }

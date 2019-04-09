@@ -2,9 +2,21 @@ package com.example.os;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import com.example.os.Clients.RetrofitClientInstance;
+import com.example.os.DTOs.Vacation;
+import com.example.os.DTOs.VacationRequest;
+import com.example.os.Interfaces.GetDataService;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MyVacationActivity extends AppCompatActivity {
 
@@ -12,26 +24,97 @@ public class MyVacationActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_vacation);
+        renderMyVacations();
+        renderVacationRequests();
 
-        TableLayout accpeted_custodies = findViewById(R.id.accepted_custodies);
+    }
+
+    private void addTextViewToMyVacations(String name) {
+
+        TableLayout accepted_vacations = findViewById(R.id.accepted_vacations);
         TableRow tableRow = new TableRow(this);
         TextView textView = new TextView(this);
-        textView.setText("weclome");
+        textView.setText(name);
         tableRow.addView(textView);
-        accpeted_custodies.addView(tableRow);
+        textView.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.7f));
+        accepted_vacations.addView(tableRow);
+    }
 
-        TableLayout custody_requests = findViewById(R.id.vacation_requests);
-        TableRow tableRow1 = new TableRow(this);
+    private void addTextViewToVacationRequests(String name, String status){
+
+        TableLayout vacation_requests = findViewById(R.id.vacation_requests);
+
+        TableRow tableRow = new TableRow(this);
+
         TextView textView1 = new TextView(this);
         TextView textView2 = new TextView(this);
-        textView1.setText("house");
-        textView2.setText("rejected");
-        tableRow1.addView(textView1);
-        tableRow1.addView(textView2);
-        custody_requests.addView(tableRow1);
+
+        textView1.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.7f));
+        textView2.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.7f));
+
+        textView1.setText(name);
+        textView2.setText(status);
+        tableRow.addView(textView1);
+        tableRow.addView(textView2);
+        addActionButtons(tableRow);
+        vacation_requests.addView(tableRow);
+    }
+
+    private void addActionButtons(TableRow tableRow){
+
+        Button accept = new Button(this);
+        Button reject = new Button(this);
+        accept.setText("Accept");
+        reject.setText("Reject");
+        tableRow.addView(accept);
+        tableRow.addView(reject);
+    }
+
+
+    private void renderVacationRequests(){
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Call<List<VacationRequest>> call = service.getVacationRequests();
+        call.enqueue(new Callback<List<VacationRequest>>() {
+            @Override
+            public void onResponse(Call<List<VacationRequest>> call, Response<List<VacationRequest>> response) {
+                for(VacationRequest vacationRequest : response.body()){
+                    addTextViewToVacationRequests(vacationRequest.getVacation().getName(), vacationRequest.getStatus());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<VacationRequest>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void renderMyVacations(){
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        Call<List<Vacation>> call = service.getVacations(getAuth());
+
+        call.enqueue(new Callback<List<Vacation>>() {
+            @Override
+            public void onResponse(Call<List<Vacation>> call, Response<List<Vacation>> response) {
+                for (Vacation vacation : response.body()){
+                    addTextViewToMyVacations(vacation.getName());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Vacation>> call, Throwable t) {
+
+            }
+        });
+    }
 
 
 
+    private String getAuth(){
+
+        MyDBHandler db = new MyDBHandler(this, null, null, 1);
+        return "Bearer " + db.getLastToken();
     }
 }
 

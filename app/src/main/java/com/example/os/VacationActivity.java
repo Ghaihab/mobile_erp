@@ -20,7 +20,7 @@ public class VacationActivity  extends AppCompatActivity {
     }
 
 
-    public void My_vacation_Button(View view) {
+    public void my_vacation_Button(View view) {
 
         Intent myIntent = new Intent(this, MyVacationActivity.class);
         startActivity(myIntent);
@@ -28,4 +28,4 @@ public class VacationActivity  extends AppCompatActivity {
     }
 }
 
-}
+

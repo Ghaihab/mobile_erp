@@ -6,18 +6,37 @@ import android.content.Context;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import java.util.ArrayList;
+import com.example.os.DTOs.User;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import org.apache.commons.codec.binary.Base64;
+
+import java.io.UnsupportedEncodingException;
 
 public class MyDBHandler extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "ERB.db";
     private static final int DATABASE_VERSION = 1;
 
+    private static MyDBHandler myDBHandler;
+
+
     //initialize the database
     public MyDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
 
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
+
+    public static synchronized MyDBHandler getInstance(Context context) {
+
+        if (myDBHandler == null) {
+            myDBHandler = new MyDBHandler(context,
+                    DATABASE_NAME, null, DATABASE_VERSION);
+        }
+        return myDBHandler;
+    }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -74,6 +93,29 @@ public class MyDBHandler extends SQLiteOpenHelper {
         String access_token = cursor.getString(cursor.getColumnIndex("access_token"));
 
         return access_token;
+    }
+
+    public String getAuthToken(){
+
+        return "Bearer " + this.getLastToken();
+    }
+
+    public User getAuthUser() {
+        String token = this.getLastToken();
+        String[] pieces = token.split("\\.");
+        String b64payload = pieces[1];
+        String jsonString = null;
+        try {
+            jsonString = new String(Base64.decodeBase64(b64payload), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        JsonObject jsonObject = new Gson().fromJson(jsonString, JsonObject.class);
+        Integer id = jsonObject.get("user").getAsJsonObject().get("id").getAsInt();
+        String name = jsonObject.get("user").getAsJsonObject().get("name").getAsString();
+        String email = jsonObject.get("user").getAsJsonObject().get("email").getAsString();
+        String type = jsonObject.get("user").getAsJsonObject().get("type").getAsString();
+        return new User(id, name, email, type);
     }
 
 }

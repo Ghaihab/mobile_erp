@@ -92,7 +92,7 @@ public class MyVacationActivity extends AppCompatActivity {
 
     private void renderMyVacations(){
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<List<Vacation>> call = service.getVacations(getAuth());
+        Call<List<Vacation>> call = service.getVacations(MyDBHandler.getInstance(this).getAuthToken());
 
         call.enqueue(new Callback<List<Vacation>>() {
             @Override
@@ -111,10 +111,6 @@ public class MyVacationActivity extends AppCompatActivity {
 
 
 
-    private String getAuth(){
 
-        MyDBHandler db = new MyDBHandler(this, null, null, 1);
-        return "Bearer " + db.getLastToken();
-    }
 }
 

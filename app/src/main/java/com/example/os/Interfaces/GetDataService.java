@@ -48,6 +48,10 @@ public interface GetDataService {
     @GET("vacations")
     Call <List<Vacation>> getVacations(@Header("Authorization") String authHeader);
 
+    @POST("change/password")
+    @FormUrlEncoded
+    Call <ResponseBody> changePassword(@Field("password") String password, @Header("Authorization") String authHead);
+
 
 
 }

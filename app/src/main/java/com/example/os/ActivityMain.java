@@ -35,4 +35,8 @@ public class ActivityMain extends AppCompatActivity {
         startActivity(new Intent(this, VacationActivity.class));
     }
 
+    public void buttonChangePassword(View view){
+        startActivity(new Intent(this, PasswordActivity.class));
+    }
+
 }

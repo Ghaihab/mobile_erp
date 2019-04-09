@@ -58,14 +58,17 @@ public class LoginActivity extends AppCompatActivity {
                     addHandlers(newToken);
                     redirectToMainPage();
 
-                } catch (Exception exception){ System.out.println("Error");
+                } catch (Exception exception){
+                    showErrorLoginMessage();
                 }
 
 
             }
 
             @Override
-            public void onFailure(Call<Login> call, Throwable t) { System.out.println("Error!!"); }
+            public void onFailure(Call<Login> call, Throwable t) {
+                showErrorLoginMessage();
+            }
         });
 
 
@@ -75,6 +78,10 @@ public class LoginActivity extends AppCompatActivity {
 
         Intent myIntent = new Intent(this, ActivityMain.class);
         startActivity(myIntent);
+    }
+
+    public void showErrorLoginMessage(){
+        Toast.makeText(this, "Logging failed, check inputs!", Toast.LENGTH_SHORT).show();
     }
 
 }

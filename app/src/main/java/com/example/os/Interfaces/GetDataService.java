@@ -15,6 +15,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface GetDataService {
 
@@ -31,6 +32,21 @@ public interface GetDataService {
 
     @GET("custody/requests")
     Call <List<CustodyRequest>> getCustodyRequests();
+
+    @GET("custody/manager/requests")
+    Call <List<CustodyRequest>> getCustodyRequestsUnderManager();
+
+    @GET("custody/hr/requests")
+    Call <List<CustodyRequest>> getHrCustodyRequestsUnderHr();
+
+    @POST("custody/manager/request/accept/{id}")
+    Call<ResponseBody> managerAcceptCustodyRequest(@Path("id") Integer id);
+
+    @POST("custody/hr/request/accept/{id}")
+    Call<ResponseBody> hrAcceptCustodyRequest(@Path("id") Integer id);
+
+    @POST("custody/request/reject/{id}")
+    Call<ResponseBody> rejectCustodyRequest(@Path("id") Integer id);
 
     @GET("custodies")
     Call <List<Custody>> getCustodies(@Header("Authorization") String authHeader);

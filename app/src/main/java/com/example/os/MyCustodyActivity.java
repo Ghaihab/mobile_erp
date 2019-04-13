@@ -57,19 +57,10 @@ public class MyCustodyActivity extends AppCompatActivity {
         textView2.setText(status);
         tableRow.addView(textView1);
         tableRow.addView(textView2);
-        addActionButtons(tableRow);
+
         custodyRequests.addView(tableRow);
     }
 
-    private void addActionButtons(TableRow tableRow){
-
-        Button accept = new Button(this);
-        Button reject = new Button(this);
-        accept.setText("Accept");
-        reject.setText("Reject");
-        tableRow.addView(accept);
-        tableRow.addView(reject);
-    }
 
 
     private void renderCustodyRequests(){

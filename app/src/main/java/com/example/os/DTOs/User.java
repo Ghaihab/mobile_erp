@@ -53,4 +53,8 @@ public class User {
         return this.type.equals("HR");
     }
 
+    public boolean isRegularEmployee(){
+        return this.type.equals("EMPLOYEE");
+    }
+
 }

@@ -56,20 +56,8 @@ public class MyVacationActivity extends AppCompatActivity {
         textView2.setText(status);
         tableRow.addView(textView1);
         tableRow.addView(textView2);
-        addActionButtons(tableRow);
         vacation_requests.addView(tableRow);
     }
-
-    private void addActionButtons(TableRow tableRow){
-
-        Button accept = new Button(this);
-        Button reject = new Button(this);
-        accept.setText("Accept");
-        reject.setText("Reject");
-        tableRow.addView(accept);
-        tableRow.addView(reject);
-    }
-
 
     private void renderVacationRequests(){
 
@@ -108,9 +96,5 @@ public class MyVacationActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-
 }
 

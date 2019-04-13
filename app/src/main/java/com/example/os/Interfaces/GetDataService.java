@@ -37,7 +37,7 @@ public interface GetDataService {
     Call <List<CustodyRequest>> getCustodyRequestsUnderManager();
 
     @GET("custody/hr/requests")
-    Call <List<CustodyRequest>> getHrCustodyRequestsUnderHr();
+    Call <List<CustodyRequest>> getCustodyRequestsUnderHr();
 
     @POST("custody/manager/request/accept/{id}")
     Call<ResponseBody> managerAcceptCustodyRequest(@Path("id") Integer id);
@@ -60,6 +60,21 @@ public interface GetDataService {
 
     @GET("vacation/requests")
     Call <List<VacationRequest>> getVacationRequests();
+
+    @GET("vacation/manager/requests")
+    Call <List<VacationRequest>> getVacationRequestsUnderManager();
+
+    @GET("vacation/hr/requests")
+    Call <List<VacationRequest>> getVacationRequestsUnderHr();
+
+    @POST("vacation/manager/request/accept/{id}")
+    Call<ResponseBody> managerAcceptVacationRequest(@Path("id") Integer id);
+
+    @POST("vacation/hr/request/accept/{id}")
+    Call<ResponseBody> hrAcceptVacationRequest(@Path("id") Integer id);
+
+    @POST("vacation/request/reject/{id}")
+    Call<ResponseBody> rejectVacationRequest(@Path("id") Integer id);
 
     @GET("vacations")
     Call <List<Vacation>> getVacations(@Header("Authorization") String authHeader);

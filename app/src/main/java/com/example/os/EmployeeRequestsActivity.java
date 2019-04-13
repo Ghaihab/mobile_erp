@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.os.Clients.RetrofitClientInstance;
 import com.example.os.DTOs.CustodyRequest;
 import com.example.os.DTOs.User;
+import com.example.os.DTOs.VacationRequest;
 import com.example.os.Interfaces.GetDataService;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class EmployeeRequestsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.employees_requests);
         renderCustodyRequests();
+        renderVacationRequests();
 
     }
 
@@ -47,11 +49,32 @@ public class EmployeeRequestsActivity extends AppCompatActivity {
         textView2.setText(status);
         tableRow.addView(textView1);
         tableRow.addView(textView2);
-        addActionButtons(tableRow, request_id);
+        custodyRequestsAddActionButtons(tableRow, request_id);
         employeeCustodyRequests.addView(tableRow);
     }
 
-    private void addActionButtons(TableRow tableRow, final Integer request_id){
+    private void addTextViewToVacationRequests(String name, String status, Integer request_id){
+        TableLayout employeeVacationRequests = findViewById(R.id.employeeVacationRequests);
+
+        TableRow tableRow = new TableRow(this);
+
+        TextView textView1 = new TextView(this);
+        TextView textView2 = new TextView(this);
+
+        textView1.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.7f));
+        textView2.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.7f));
+
+        textView1.setText(name);
+        textView2.setText(status);
+        tableRow.addView(textView1);
+        tableRow.addView(textView2);
+        vacationRequestsAddActionButtons(tableRow, request_id);
+        employeeVacationRequests.addView(tableRow);
+    }
+
+
+
+    private void custodyRequestsAddActionButtons(TableRow tableRow, final Integer request_id){
 
         Button accept = new Button(this);
         Button reject = new Button(this);
@@ -99,8 +122,53 @@ public class EmployeeRequestsActivity extends AppCompatActivity {
         tableRow.addView(reject);
     }
 
+    private void vacationRequestsAddActionButtons(TableRow tableRow, final Integer request_id) {
 
+        Button accept = new Button(this);
+        Button reject = new Button(this);
+        accept.setText("Accept");
 
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Call<ResponseBody> call =  acceptVacationRequest(request_id);
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        showSuccessMessage("Accepted");
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
+
+        reject.setText("Reject");
+
+        reject.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Call <ResponseBody> call = rejectVacationRequest(request_id);
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        showSuccessMessage("Rejected");
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
+
+        tableRow.addView(accept);
+        tableRow.addView(reject);
+    }
 
     private void renderCustodyRequests(){
 
@@ -120,6 +188,23 @@ public class EmployeeRequestsActivity extends AppCompatActivity {
         });
     }
 
+    private void renderVacationRequests() {
+        Call<List<VacationRequest>> call = getVacationRequests();
+        call.enqueue(new Callback<List<VacationRequest>>() {
+            @Override
+            public void onResponse(Call<List<VacationRequest>> call, Response<List<VacationRequest>> response) {
+                for (VacationRequest vacationRequest : response.body()){
+                    addTextViewToVacationRequests(vacationRequest.getVacation().getName(), vacationRequest.getStatus(), vacationRequest.getId());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<VacationRequest>> call, Throwable t) {
+
+            }
+        });
+    }
+
 
     private Call<List<CustodyRequest>> getCustodyRequests() {
 
@@ -127,9 +212,23 @@ public class EmployeeRequestsActivity extends AppCompatActivity {
         User user = MyDBHandler.getInstance(this).getAuthUser();
         Call <List<CustodyRequest>> call = null;
         if(user.isHR()){
-            call = service.getHrCustodyRequestsUnderHr();
+            call = service.getCustodyRequestsUnderHr();
         } else if(user.isManager()){
             call = service.getCustodyRequestsUnderManager();
+        }
+
+        return call;
+    }
+
+    private Call<List<VacationRequest>> getVacationRequests(){
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        User user = MyDBHandler.getInstance(this).getAuthUser();
+        Call <List<VacationRequest>> call = null;
+        if(user.isHR()){
+            call = service.getVacationRequestsUnderHr();
+        } else if(user.isManager()){
+            call = service.getVacationRequestsUnderManager();
         }
 
         return call;
@@ -152,6 +251,26 @@ public class EmployeeRequestsActivity extends AppCompatActivity {
     private Call<ResponseBody> rejectCustodyRequest(Integer request_id) {
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
         return service.rejectCustodyRequest(request_id);
+    }
+
+
+    private Call<ResponseBody> acceptVacationRequest(Integer request_id) {
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        User user = MyDBHandler.getInstance(this).getAuthUser();
+        Call <ResponseBody> call = null;
+        if(user.isHR()){
+            call = service.hrAcceptVacationRequest(request_id);
+        } else if(user.isManager()){
+            call = service.managerAcceptVacationRequest(request_id);
+        }
+
+        return call;
+    }
+
+    private Call<ResponseBody> rejectVacationRequest(Integer request_id) {
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        return service.rejectVacationRequest(request_id);
+
     }
 
     private void showSuccessMessage(String action) {

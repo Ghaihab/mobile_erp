@@ -1,5 +1,6 @@
 package com.example.os.Interfaces;
 
+import com.example.os.DTOs.CertificationRequest;
 import com.example.os.DTOs.Custody;
 import com.example.os.DTOs.CustodyRequest;
 import com.example.os.DTOs.Login;
@@ -8,17 +9,13 @@ import com.example.os.DTOs.VacationRequest;
 
 import java.util.List;
 
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface GetDataService {
@@ -84,16 +81,32 @@ public interface GetDataService {
     Call <List<Vacation>> getVacations(@Header("Authorization") String authHeader);
 
     @POST("upload/requests/create")
-    @Multipart
     Call <ResponseBody> createCertificationRequest(
             @Header("Authorization") String authHeader,
-            @Part MultipartBody.Part file,
-            @Part("course_name") RequestBody course_name,
-            @Part("training_palce") RequestBody training_palce,
-            @Part("expected_hours") RequestBody expected_hours,
-            @Part("from") RequestBody from,
-            @Part("to") RequestBody to
+            String course_name,
+            String training_palce,
+            String expected_hours,
+            String from,
+            String to
     );
+
+    @GET("upload/requests")
+    Call <List<CertificationRequest>> getCertificationRequests();
+
+    @GET("upload/hr/requests")
+    Call <List<CertificationRequest>> getCertificationRequestsUnderHr();
+
+    @GET("upload/manager/requests")
+    Call <List<CertificationRequest>> getCertificationRequestsUnderManager();
+
+    @POST("upload/manager/request/accept/{id}")
+    Call <ResponseBody> managerAcceptCertificationRequest(@Path("id") Integer id);
+
+    @POST("upload/hr/request/accept/{id}")
+    Call <ResponseBody> hrAcceptCertificationRequest(@Path("id") Integer id);
+
+    @POST("upload/request/reject/{id}")
+    Call <ResponseBody> rejectCertificationRequest(@Path("id") Integer id);
 
     @POST("change/password")
     @FormUrlEncoded

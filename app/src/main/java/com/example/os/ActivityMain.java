@@ -50,4 +50,8 @@ public class ActivityMain extends AppCompatActivity {
         startActivity(new Intent(this, EmployeeRequestsActivity.class));
     }
 
+    public void buttonCertification(View view){
+        startActivity(new Intent(this, CertificationActivity.class));
+    }
+
 }

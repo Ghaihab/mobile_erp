@@ -4,6 +4,8 @@
 
     <!--Internet Permission-->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -23,6 +25,9 @@
         <activity android:name=".MyVacationActivity"/>
         <activity android:name=".PasswordActivity"/>
         <activity android:name=".EmployeeRequestsActivity"/>
+        <activity android:name=".CertificationActivity"/>
+        <activity android:name=".MyCertificationActivity"/>
+        <activity android:name=".RequestNewCertificationActivity"/>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

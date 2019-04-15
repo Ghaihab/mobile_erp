@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -55,7 +56,9 @@ public class RequestNewVacationActivity extends AppCompatActivity {
 
         int radioId = radioGroup.getCheckedRadioButtonId();
         radioButton = findViewById(radioId);
-        createVacationRequest(radioId);
+        EditText number_of_days = findViewById(R.id.number_of_days);
+
+        createVacationRequest(radioId, number_of_days.getText().toString());
         Toast.makeText(this, "Requested for: " + radioButton.getText() + " successfully", Toast.LENGTH_SHORT).show();
 
 
@@ -91,10 +94,10 @@ public class RequestNewVacationActivity extends AppCompatActivity {
         });
     }
 
-    private void createVacationRequest(int id) {
+    private void createVacationRequest(int id, String number_of_days) {
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<ResponseBody> call = service.createVacationRequest(id, getAuth());
+        Call<ResponseBody> call = service.createVacationRequest(id, number_of_days, getAuth());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

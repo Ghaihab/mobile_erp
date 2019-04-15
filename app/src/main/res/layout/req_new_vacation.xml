@@ -15,6 +15,20 @@
 
     </RadioGroup>
 
+
+    <EditText
+        android:id="@+id/number_of_days"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="134dp"
+        android:ems="10"
+        android:hint="Number of days"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        tools:layout_editor_absoluteX="0dp" />
+
     <TextView
         android:id="@+id/text_view_selected"
         android:layout_width="wrap_content"
@@ -29,9 +43,9 @@
         android:id="@+id/button_apply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_view_selected"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="37dp"
+        android:layout_marginBottom="65dp"
         android:text="apply" />
 
 </RelativeLayout>

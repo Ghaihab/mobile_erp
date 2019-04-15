@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.example.os.DTOs.User;
 
+import org.w3c.dom.Text;
+
 public class PersonalnfoActivity extends AppCompatActivity {
 
     @Override
@@ -15,27 +17,19 @@ public class PersonalnfoActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.personal_information);
-        TableLayout personal_information_table = findViewById(R.id.personal_information_table);
-        TableRow tableRow = new TableRow(this);
-        TextView name = new TextView(this);
-        TextView phone_number = new TextView(this);
-        TextView ssn = new TextView(this);
-
         User user = MyDBHandler.getInstance(this).getAuthUser();
+
+        TextView name = findViewById(R.id.textView4);
+        TextView phone_number = findViewById(R.id.textView6);
+        TextView email = findViewById(R.id.textView5);
+        TextView gender = findViewById(R.id.textView8);
+        TextView ssn = findViewById(R.id.textView10);
 
         name.setText(user.getName());
         phone_number.setText(user.getPhoneNumber());
+        email.setText(user.getEmail());
+        gender.setText(user.getGender());
         ssn.setText(user.getSSN());
-
-        tableRow.addView(name);
-        tableRow.addView(phone_number);
-        tableRow.addView(ssn);
-
-        name.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.7f));
-        phone_number.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.7f));
-        ssn.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.7f));
-        personal_information_table.addView(tableRow);
-
 
     }
 

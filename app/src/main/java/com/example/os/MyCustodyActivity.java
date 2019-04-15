@@ -32,7 +32,7 @@ public class MyCustodyActivity extends AppCompatActivity {
 
     private void addTextViewToMyCustodies(String name) {
 
-        TableLayout accpetedCustodies = findViewById(R.id.accepted_certification);
+        TableLayout accpetedCustodies = findViewById(R.id.accepted_custodies);
         TableRow tableRow = new TableRow(this);
         TextView textView = new TextView(this);
         textView.setText(name);

@@ -117,8 +117,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
         String phone_number = jsonObject.get("user").getAsJsonObject().get("phone_number").getAsString();
         String ssn = jsonObject.get("user").getAsJsonObject().get("ssn").getAsString();
         String type = jsonObject.get("user").getAsJsonObject().get("type").getAsString();
+        String gender = "Male";
 
-        return new User(id, name, email, phone_number, ssn, type);
+        return new User(id, name, email, phone_number, ssn, type, gender);
     }
 
 }

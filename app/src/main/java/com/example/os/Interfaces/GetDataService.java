@@ -57,7 +57,11 @@ public interface GetDataService {
 
     @POST("vacation/requests/create")
     @FormUrlEncoded
-    Call <ResponseBody> createVacationRequest(@Field("vacation_id") int vacation_id, @Header("Authorization") String authHeader);
+    Call <ResponseBody> createVacationRequest(
+            @Field("vacation_id") int vacation_id,
+            @Field("number_of_days") String number_of_days,
+            @Header("Authorization") String authHeader
+    );
 
     @GET("vacation/requests")
     Call <List<VacationRequest>> getVacationRequests();

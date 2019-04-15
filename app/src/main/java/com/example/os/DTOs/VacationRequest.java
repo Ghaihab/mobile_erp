@@ -13,10 +13,14 @@ public class VacationRequest {
     @Expose
     private Vacation vacation;
 
-    public VacationRequest(Integer id, String status, Vacation vacation) {
+    @SerializedName("number_of_days")
+    private String number_of_days;
+
+    public VacationRequest(Integer id, String status, Vacation vacation, String number_of_days) {
         this.id = id;
         this.status = status;
         this.vacation = vacation;
+        this.number_of_days = number_of_days;
     }
 
     public Integer getId() {
@@ -29,5 +33,9 @@ public class VacationRequest {
 
     public Vacation getVacation() {
         return vacation;
+    }
+
+    public String getNumberOfDays(){
+        return number_of_days;
     }
 }

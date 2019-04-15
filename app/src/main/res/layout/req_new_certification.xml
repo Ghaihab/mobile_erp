@@ -1,6 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent"
+    tools:context=".RequestNewCertificationActivity">
+
+
+    <EditText
+        android:id="@+id/course_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Course Name"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="58dp" />
+
+    <EditText
+        android:id="@+id/training_place"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:hint="Training Place"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@+id/course_name"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:id="@+id/expected_hours"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:hint="Expected hours"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@+id/training_place"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:id="@+id/req_date_from"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="From"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@+id/expected_hours"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:id="@+id/req_date_to"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:ems="10"
+        android:hint="To"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@+id/req_date_from"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="148dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="56dp"
+        android:text="save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date-to" />
 
 </android.support.constraint.ConstraintLayout>

@@ -81,13 +81,14 @@ public interface GetDataService {
     Call <List<Vacation>> getVacations(@Header("Authorization") String authHeader);
 
     @POST("upload/requests/create")
+    @FormUrlEncoded
     Call <ResponseBody> createCertificationRequest(
             @Header("Authorization") String authHeader,
-            String course_name,
-            String training_palce,
-            String expected_hours,
-            String from,
-            String to
+            @Field("course_name") String course_name,
+            @Field("training_palce") String training_palce,
+            @Field("expected_hours") String expected_hours,
+            @Field("from") String from,
+            @Field("to") String to
     );
 
     @GET("upload/requests")
@@ -107,6 +108,9 @@ public interface GetDataService {
 
     @POST("upload/request/reject/{id}")
     Call <ResponseBody> rejectCertificationRequest(@Path("id") Integer id);
+
+    @GET("uploads")
+    Call <List<CertificationRequest>> getUploads(@Header("Authorization") String authHeader);
 
     @POST("change/password")
     @FormUrlEncoded

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.os.Clients.RetrofitClientInstance;
+import com.example.os.DTOs.CertificationRequest;
 import com.example.os.DTOs.CustodyRequest;
 import com.example.os.DTOs.User;
 import com.example.os.DTOs.VacationRequest;
@@ -28,9 +29,30 @@ public class EmployeeRequestsActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.employees_requests);
+        renderCertificationRequests();
         renderCustodyRequests();
         renderVacationRequests();
 
+    }
+
+
+    public void addTextViewToCertificationRequests(String name, String status, Integer request_id){
+        TableLayout employeeCertificationRequests = findViewById(R.id.employeeCertificationRequests);
+
+        TableRow tableRow = new TableRow(this);
+
+        TextView textView1 = new TextView(this);
+        TextView textView2 = new TextView(this);
+
+        textView1.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.7f));
+        textView2.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.7f));
+
+        textView1.setText(name);
+        textView2.setText(status);
+        tableRow.addView(textView1);
+        tableRow.addView(textView2);
+        certificationRequestsAddActionButtons(tableRow, request_id);
+        employeeCertificationRequests.addView(tableRow);
     }
 
     private void addTextViewToCustodyRequests(String name, String status, Integer request_id){
@@ -70,6 +92,54 @@ public class EmployeeRequestsActivity extends AppCompatActivity {
         tableRow.addView(textView2);
         vacationRequestsAddActionButtons(tableRow, request_id);
         employeeVacationRequests.addView(tableRow);
+    }
+
+    private void certificationRequestsAddActionButtons(TableRow tableRow, final Integer request_id){
+
+        Button accept = new Button(this);
+        Button reject = new Button(this);
+        accept.setText("Accept");
+
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Call<ResponseBody> call =  acceptCertificationRequest(request_id);
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        showSuccessMessage("Accepted");
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
+
+        reject.setText("Reject");
+
+        reject.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Call <ResponseBody> call = rejectCertificationRequest(request_id);
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        showSuccessMessage("Rejected");
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
+
+        tableRow.addView(accept);
+        tableRow.addView(reject);
     }
 
 
@@ -170,6 +240,25 @@ public class EmployeeRequestsActivity extends AppCompatActivity {
         tableRow.addView(reject);
     }
 
+    private void renderCertificationRequests(){
+        Call<List<CertificationRequest>> call = getCertificationRequests();
+        call.enqueue(new Callback<List<CertificationRequest>>() {
+            @Override
+            public void onResponse(Call<List<CertificationRequest>> call, Response<List<CertificationRequest>> response) {
+                for (CertificationRequest certificationRequest : response.body()){
+                    addTextViewToCertificationRequests(
+                            certificationRequest.getCourse_name(), certificationRequest.getStatus(), certificationRequest.getId()
+                    );
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<CertificationRequest>> call, Throwable t) {
+
+            }
+        });
+    }
+
     private void renderCustodyRequests(){
 
         Call<List<CustodyRequest>> call = getCustodyRequests();
@@ -205,6 +294,20 @@ public class EmployeeRequestsActivity extends AppCompatActivity {
         });
     }
 
+    private Call<List<CertificationRequest>> getCertificationRequests(){
+
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        User user = MyDBHandler.getInstance(this).getAuthUser();
+        Call <List<CertificationRequest>> call = null;
+        if(user.isHR()){
+            call = service.getCertificationRequestsUnderHr();
+        } else if(user.isManager()){
+            call = service.getCertificationRequestsUnderManager();
+        }
+
+        return call;
+    }
+
 
     private Call<List<CustodyRequest>> getCustodyRequests() {
 
@@ -233,6 +336,25 @@ public class EmployeeRequestsActivity extends AppCompatActivity {
 
         return call;
     }
+
+    private Call<ResponseBody> acceptCertificationRequest(Integer request_id){
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        User user = MyDBHandler.getInstance(this).getAuthUser();
+        Call <ResponseBody> call = null;
+        if(user.isHR()){
+            call = service.hrAcceptCertificationRequest(request_id);
+        } else if(user.isManager()){
+            call = service.managerAcceptCertificationRequest(request_id);
+        }
+
+        return call;
+    }
+
+    private Call<ResponseBody> rejectCertificationRequest(Integer request_id) {
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
+        return service.rejectCertificationRequest(request_id);
+    }
+
 
     private Call<ResponseBody> acceptCustodyRequest(Integer request_id){
 

@@ -75,21 +75,25 @@ public class EmployeeRequestsActivity extends AppCompatActivity {
         employeeCustodyRequests.addView(tableRow);
     }
 
-    private void addTextViewToVacationRequests(String name, String status, Integer request_id){
+    private void addTextViewToVacationRequests(String name, String status,String days, Integer request_id){
         TableLayout employeeVacationRequests = findViewById(R.id.employeeVacationRequests);
 
         TableRow tableRow = new TableRow(this);
 
         TextView textView1 = new TextView(this);
         TextView textView2 = new TextView(this);
+        TextView textView3 = new TextView(this);
 
         textView1.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.7f));
         textView2.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.7f));
+        textView3.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 0.7f));
 
         textView1.setText(name);
-        textView2.setText(status);
+        textView2.setText(days);
+        textView3.setText(status);
         tableRow.addView(textView1);
         tableRow.addView(textView2);
+        tableRow.addView(textView3);
         vacationRequestsAddActionButtons(tableRow, request_id);
         employeeVacationRequests.addView(tableRow);
     }
@@ -283,7 +287,12 @@ public class EmployeeRequestsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<VacationRequest>> call, Response<List<VacationRequest>> response) {
                 for (VacationRequest vacationRequest : response.body()){
-                    addTextViewToVacationRequests(vacationRequest.getVacation().getName(), vacationRequest.getStatus(), vacationRequest.getId());
+                    addTextViewToVacationRequests(
+                            vacationRequest.getVacation().getName(),
+                            vacationRequest.getStatus(),
+                            vacationRequest.getNumberOfDays(),
+                            vacationRequest.getId()
+                    );
                 }
             }
 
